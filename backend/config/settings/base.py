@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 import environ
@@ -246,7 +246,10 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(env("REDIS_HOST"), env.int("REDIS_PORT"))],
+            "hosts": [(
+                os.environ.get("REDIS_HOST"),
+                os.environ.get("REDIS_PORT")
+            )],
         },
     },
 }
