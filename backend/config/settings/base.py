@@ -74,6 +74,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "channels"
 ]
 
 LOCAL_APPS = [
@@ -233,4 +234,19 @@ LOGGING = {
         }
     },
     "root": {"level": "INFO", "handlers": ["console"]},
+}
+
+# ASGI server
+# ------------------------------------------------------------------------------
+ASGI_APPLICATION = "config.asgi.application"
+
+# CHANNELS
+# ------------------------------------------------------------------------------
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(env("REDIS_HOST"), env.int("REDIS_PORT"))],
+        },
+    },
 }
