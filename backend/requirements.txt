@@ -1,0 +1,8 @@
+asgiref
+Django
+django-debug-toolbar
+django-environ
+djangorestframework
+psycopg2
+pytz
+sqlparse
