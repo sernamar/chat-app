@@ -20,8 +20,20 @@ POSTGRES_PASSWORD=password
 ### Stop the application
 `make stop`
 
+### Use the application (TODO: Not implemented yet)
+1. Open `http://localhost:3000/login` in a browser window and login with one of these (already created) users:
+
+| User | Password |
+|------|----------|
+ | foo  | foo123   |
+ | bar  | bar456   |
+
+2. Open `http://localhost:3000/login` in another browser window and login with the other user.
+3. Start chatting.
+
 ## Main technologies
 - Django REST Framework
+- Django Channels
 - ReactJS
 - Tailwind CSS
 - Docker
