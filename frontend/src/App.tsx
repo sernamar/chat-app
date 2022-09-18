@@ -5,7 +5,7 @@ export default function App() {
   const [welcomeMessage, setWelcomeMessage] = useState("")
 
   
-  const { readyState } = useWebSocket("ws://127.0.0.1:8000/", {
+  const { readyState, sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/", {
     onOpen: () => {
       console.log("Connected!");
     },
@@ -34,9 +34,19 @@ export default function App() {
   }[readyState];
 
   return (
-    <div>
+    <>
       <span>The WebSocket is currently {connectionStatus}</span>
       <p>{welcomeMessage}</p>
-    </div>
+      <button className="bg-gray-300 px-3 py-1"
+              onClick={() => {
+                sendJsonMessage({
+                  type: "greeting",
+                  message: "Hi!"
+                })
+              }}
+      >
+        Say Hi
+      </button>
+    </>
   );
 };
