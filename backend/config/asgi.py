@@ -13,8 +13,9 @@ from pathlib import Path
 
 from django.core.asgi import get_asgi_application
 
-# This allows easy placement of apps within the interior core directory.
+from core.middleware import TokenAuthMiddleware  # noqa isort:skip
 
+# This allows easy placement of apps within the interior core directory.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 sys.path.append(str(BASE_DIR / "core"))
 
@@ -33,6 +34,6 @@ from channels.routing import ProtocolTypeRouter, URLRouter  # noqa isort:skip
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
-        "websocket": URLRouter(routing.websocket_urlpatterns),
+        "websocket": TokenAuthMiddleware(URLRouter(routing.websocket_urlpatterns)),
     }
 )

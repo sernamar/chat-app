@@ -1,35 +1,42 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import {AuthContext} from "../contexts/AuthContext";
 
 export function Chat() {
   const [welcomeMessage, setWelcomeMessage] = useState("")
   const [message, setMessage] = useState("")
   const [name, setName] = useState("")
   const [messageHistory, setMessageHistory] = useState<any>([]);
+  const { user } = useContext(AuthContext);
 
 
-  const { readyState, sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/", {
-    onOpen: () => {
-      console.log("Connected!");
-    },
-    onClose: () => {
-      console.log("Disconnected!");
-    },
-    onMessage: (e) => {
-  const data = JSON.parse(e.data)
-  switch (data.type) {
-    case "welcome_message":
-      setWelcomeMessage(data.message);
-      break;
-    case "chat_message_echo":
-      setMessageHistory((prev:any) => prev.concat(data));
-      break;
-    default:
-      console.error("Unknown message type!");
-      break;
-  }
-}
-  });
+  const { readyState, sendJsonMessage } = useWebSocket(
+    user ? "ws://127.0.0.1:8000/" : null,
+    {
+      queryParams: {
+        token: user ? user.token : "",
+      },
+      onOpen: () => {
+        console.log("Connected!");
+      },
+      onClose: () => {
+        console.log("Disconnected!");
+      },
+      onMessage: (e) => {
+        const data = JSON.parse(e.data)
+        switch (data.type) {
+          case "welcome_message":
+            setWelcomeMessage(data.message);
+            break;
+          case "chat_message_echo":
+            setMessageHistory((prev:any) => prev.concat(data));
+            break;
+          default:
+            console.error("Unknown message type!");
+            break;
+        }
+      }
+    });
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
