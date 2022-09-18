@@ -16,7 +16,7 @@ DOCKER_COMPOSE = docker compose
 DOCKER_COMPOSE_FILE = docker-compose.yml
 
 # ----------------------- #
-# Docker                  #
+# Managing the stack      #
 # ----------------------- #
 
 build:
@@ -32,3 +32,27 @@ restart: stop start
 
 docker-clean:
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --remove-orphans
+
+# ----------------------- #
+# Querying the stack      #
+# ----------------------- #
+
+ls: list-apps
+
+list-apps:
+	@$(DOCKER_COMPOSE) config --services
+
+logs:
+	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) logs --tail=100 -f $(a)
+
+ps: status
+
+status:
+	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) ps
+
+# ----------------------- #
+# Managing data           #
+# ----------------------- #
+
+shell:
+	docker exec -it $(a) bash
