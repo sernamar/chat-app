@@ -73,8 +73,10 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "channels",
+    "corsheaders",
     "rest_framework",
-    "channels"
+    "rest_framework.authtoken",
 ]
 
 LOCAL_APPS = [
@@ -94,6 +96,13 @@ AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+# https://www.django-rest-framework.org/api-guide/authentication/
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "core.User"
@@ -131,6 +140,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
