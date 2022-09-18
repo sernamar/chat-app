@@ -20,7 +20,7 @@ POSTGRES_PASSWORD=password
 ### Stop the application
 `make stop`
 
-## Technologies
+## Main technologies
 - Django REST Framework
 - ReactJS
 - Tailwind CSS
