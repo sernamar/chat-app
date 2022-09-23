@@ -6,7 +6,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -35,3 +35,6 @@ services:
       - ./frontend:/frontend
     ports:
       - "3000:3000"
+
+volumes:
+  db-data: {}
