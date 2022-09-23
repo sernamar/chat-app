@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Chat } from "./components/Chat";
 import { Login } from "./components/Login";
@@ -8,6 +8,9 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./contexts/AuthContext";
 
 export default function App() {
+  useEffect(() => {
+    document.title = "Chat App";
+  });
   return (
     <BrowserRouter>
       <Routes>
